@@ -1,5 +1,7 @@
 import { getSupabase } from '@/lib/supabase';
 import { siteUrl } from '@/lib/url';
+export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export async function GET() {
   const urls: string[] = [siteUrl('/'), siteUrl('/search')];
@@ -28,5 +30,10 @@ export async function GET() {
     .join('\n');
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${xmlItems}\n</urlset>`;
-  return new Response(xml, { headers: { 'Content-Type': 'application/xml' } });
+  return new Response(xml, {
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+    },
+  });
 }

@@ -8,6 +8,7 @@ import ArticleDetail from '@/components/ArticleDetail';
 import { Skeleton } from '@/components/ui/skeleton';
 import Spinner from '@/components/Spinner';
 import { useAuth } from '@/context/AuthContext';
+import { siteUrl } from '@/lib/url';
 
 export default function ArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -42,6 +43,24 @@ export default function ArticlePage() {
       </div>
     );
   if (!article) return <p className="mx-auto mt-8 max-w-3xl text-muted-foreground">Article not found</p>;
+  const url = siteUrl(`/article/${article.slug || article.id}`);
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'ScholarlyArticle',
+    headline: article.title,
+    description: article.description,
+    articleSection: article.category,
+    author: { '@type': 'Person', name: article.author },
+    datePublished: article.published_date,
+    dateModified: article.updated_at,
+    keywords: Array.isArray(article.tags) ? article.tags.join(', ') : undefined,
+    url,
+  };
 
-  return <ArticleDetail article={article} showEdit={isAdmin} />;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <ArticleDetail article={article} showEdit={isAdmin} />
+    </>
+  );
 }
