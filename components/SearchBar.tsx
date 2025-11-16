@@ -17,15 +17,24 @@ export default function SearchBar({ large = false }: { large?: boolean }) {
   };
 
   return (
-    <form onSubmit={submit} className={`mx-auto flex items-center gap-2 ${large ? 'max-w-2xl' : 'max-w-xl'} w-full`}>\
-      <div className="relative w-full">
-        <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+    <form onSubmit={submit} className={`mx-auto ${large ? 'max-w-3xl' : 'max-w-xl'} w-full`}>
+      <div className={`relative flex items-center rounded-full bg-card shadow-xl ${large ? 'p-2' : 'p-1'} ring-1 ring-border/60`}> 
+        <div className={`pointer-events-none pl-4 ${large ? 'pr-2' : 'pr-1'}`}>
+          <Search className={`h-5 w-5 text-muted-foreground`} />
+        </div>
         <Input
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="What are you looking for?"
-          className={`pl-10 ${large ? 'h-12 text-lg' : 'h-10'} rounded-full shadow-sm`}
+          className={`flex-1 border-0 bg-transparent focus-visible:ring-0 ${large ? 'h-12 text-base' : 'h-10'} px-0`}
         />
+        <button
+          type="submit"
+          className={`ml-2 mr-2 grid shrink-0 place-items-center rounded-full bg-primary text-primary-foreground ${large ? 'h-12 w-12' : 'h-10 w-10'} shadow-md`}
+          aria-label="Search"
+        >
+          <Search className={`${large ? 'h-5 w-5' : 'h-4 w-4'}`} />
+        </button>
       </div>
     </form>
   );

@@ -10,7 +10,8 @@ export default function ArticleDetail({ article, showEdit }: { article: Article;
         <Link href={`/search?q=${encodeURIComponent(article.title)}`}>Search</Link>{' '}
         <span className="mx-1">›</span> <span>{article.title}</span>
       </nav>
-      <h1 className="mb-2 text-3xl font-bold tracking-tight">{article.title}</h1>
+      <h1 className="text-4xl font-extrabold tracking-tight">{article.title}</h1>
+      <div className="mt-2 h-0.5 w-20 rounded bg-accent" />
       <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
         <span>
           {article.author} • {new Date(article.published_date).toLocaleDateString()}

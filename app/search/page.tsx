@@ -53,6 +53,12 @@ export default function SearchPage() {
       <div className="mb-6">
         <SearchBar />
       </div>
+      {q && (
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold">Results for "{q}"</h2>
+          <div className="mt-2 h-0.5 w-16 rounded bg-accent" />
+        </div>
+      )}
       {loading && (
         <div className="grid gap-4 sm:grid-cols-2">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -64,7 +70,7 @@ export default function SearchPage() {
         <p className="text-center text-muted-foreground">No results found</p>
       )}
       {!loading && results && results.length > 0 && (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2">
           {results.map((a) => (
             <ArticleCard key={a.id} article={a} />
           ))}

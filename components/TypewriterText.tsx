@@ -3,46 +3,49 @@
 import { useEffect, useState } from 'react';
 
 const phrases = [
-  'Search for AI Research...',
-  'Search for Medical Studies...',
-  'Search for Physics Papers...',
-  'Search for Biology Articles...',
-  'Search for Technology Research...',
+  'Search for AI research...',
+  'Search for Medical studies...',
+  'Search for Physics papers...',
+  'Search for Biology articles...',
+  'Search for Technology research...',
 ];
 
 export default function TypewriterText() {
   const [index, setIndex] = useState(0);
   const [display, setDisplay] = useState('');
-  const [deleting, setDeleting] = useState(false);
+  const [mode, setMode] = useState<'typing' | 'deleting'>('typing');
 
   useEffect(() => {
     const current = phrases[index % phrases.length];
-    const typeSpeed = deleting ? 60 : 120;
-    const timeout = setTimeout(() => {
-      if (!deleting) {
+    const isTyping = mode === 'typing';
+    const speed = isTyping ? 120 : 60;
+
+    const timer = setTimeout(() => {
+      if (isTyping) {
         const next = current.slice(0, display.length + 1);
         setDisplay(next);
         if (next === current) {
-          setTimeout(() => setDeleting(true), 2000);
+          setTimeout(() => setMode('deleting'), 2000);
         }
       } else {
-        const next = current.slice(0, display.length - 1);
+        const next = current.slice(0, Math.max(0, display.length - 1));
         setDisplay(next);
         if (next.length === 0) {
           setTimeout(() => {
-            setDeleting(false);
+            setMode('typing');
             setIndex((i) => (i + 1) % phrases.length);
           }, 500);
         }
       }
-    }, typeSpeed);
-    return () => clearTimeout(timeout);
-  }, [display, deleting, index]);
+    }, speed);
+
+    return () => clearTimeout(timer);
+  }, [display, index, mode]);
 
   return (
-    <div className="mt-4 text-xl text-muted-foreground">
+    <div className="mt-4 text-2xl text-muted-foreground">
       {display}
-      <span className="ml-1 inline-block animate-pulse">|</span>
+      <span aria-hidden className="ml-1 inline-block animate-pulse">|</span>
     </div>
   );
 }
