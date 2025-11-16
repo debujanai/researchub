@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { getSupabase, getSiteUrl } from '@/lib/supabase';
-import { isAdminEmail } from '@/lib/auth';
+import { isAdminCheck } from '@/lib/auth';
 
 type AuthState = {
   user: import('@supabase/supabase-js').User | null;
@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const currentUser = session?.user ?? null;
         setUser(currentUser);
         const email = currentUser?.email ?? currentUser?.user_metadata?.email;
-        const admin = await isAdminEmail(email);
+        const admin = await isAdminCheck(currentUser?.id || null, email);
         setIsAdmin(admin);
         setProfile(
           currentUser
@@ -44,13 +44,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               }
             : null
         );
-        if (admin) {
-          if (typeof document !== 'undefined') {
-            document.cookie = 'is_admin=true; Path=/; SameSite=Lax';
-          }
-        } else {
-          if (typeof document !== 'undefined') {
-            document.cookie = 'is_admin=; Path=/; Max-Age=0; SameSite=Lax';
+        if (typeof document !== 'undefined') {
+          const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+          if (admin) {
+            document.cookie = `is_admin=true; Path=/; SameSite=Lax${secure}`;
+          } else {
+            document.cookie = `is_admin=; Path=/; Max-Age=0; SameSite=Lax${secure}`;
           }
         }
       } catch {
@@ -86,7 +85,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signOut = async () => {
     await getSupabase().auth.signOut();
     if (typeof document !== 'undefined') {
-      document.cookie = 'is_admin=; Path=/; Max-Age=0; SameSite=Lax';
+      const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+      document.cookie = `is_admin=; Path=/; Max-Age=0; SameSite=Lax${secure}`;
     }
   };
 

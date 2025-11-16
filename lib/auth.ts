@@ -1,15 +1,26 @@
 import { getSupabase } from './supabase';
 
-export async function isAdminEmail(email: string | null | undefined): Promise<boolean> {
-  if (!email) return false;
-  const { data, error } = await getSupabase()
-    .from('admin_users')
-    .select('email')
-    .eq('email', email)
-    .limit(1)
-    .maybeSingle();
-  if (error) return false;
-  return Boolean(data?.email);
+export async function isAdminCheck(userId: string | null | undefined, email?: string | null | undefined): Promise<boolean> {
+  const client = getSupabase();
+  if (userId) {
+    const { data, error } = await client
+      .from('admin_users')
+      .select('id')
+      .eq('id', userId)
+      .limit(1)
+      .maybeSingle();
+    if (!error && data?.id) return true;
+  }
+  if (email) {
+    const { data, error } = await client
+      .from('admin_users')
+      .select('email')
+      .eq('email', email)
+      .limit(1)
+      .maybeSingle();
+    if (!error && data?.email) return true;
+  }
+  return false;
 }
 
 export function sanitizeContent(input: string): string {
