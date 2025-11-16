@@ -13,7 +13,7 @@ export default function SearchBar({ large = false }: { large?: boolean }) {
     e.preventDefault();
     const query = q.trim();
     if (!query) return;
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+    router.push(`/search/${encodeURIComponent(query)}`);
   };
 
   return (
