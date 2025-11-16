@@ -3,11 +3,14 @@
 import { useEffect, useState } from 'react';
 
 const phrases = [
-  'Search for AI research...',
-  'Search for Medical studies...',
-  'Search for Physics papers...',
-  'Search for Biology articles...',
-  'Search for Technology research...',
+  'Search for Civil Engineering research...',
+  'Search for Structural Engineering...',
+  'Search for Geotechnical studies...',
+  'Search for Transportation research...',
+  'Search for Water Resources papers...',
+  'Search for Environmental Engineering...',
+  'Search for Construction Management...',
+  'Search for Materials & Concrete...',
 ];
 
 export default function TypewriterText() {

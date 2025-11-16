@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'ResearchHub',
-  description: 'Search and manage research articles',
+  description: 'Civil engineering research articles and papers',
 };
 
 export default function RootLayout({

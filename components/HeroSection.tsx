@@ -13,12 +13,12 @@ export default function HeroSection() {
         <SearchBar large />
       </div>
       <p className="mt-6 max-w-2xl text-sm text-muted-foreground">
-        Your comprehensive research hub for peer‑reviewed articles across AI, medicine,
-        physics, biology, and technology—all in one place.
+        Your comprehensive hub for peer‑reviewed civil engineering articles and papers—
+        structural, geotechnical, transportation, water resources, environmental, materials, and construction.
       </p>
       <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1"><Check className="h-3 w-3" /> Thousands of papers</span>
-        <span className="flex items-center gap-1"><Check className="h-3 w-3" /> Cross‑disciplinary search</span>
+        <span className="flex items-center gap-1"><Check className="h-3 w-3" /> Codes & standards</span>
+        <span className="flex items-center gap-1"><Check className="h-3 w-3" /> Discipline filters</span>
         <span className="flex items-center gap-1"><Check className="h-3 w-3" /> Instant discovery</span>
       </div>
     </section>

@@ -120,7 +120,17 @@ export default function ArticleForm({ initial, mode = 'create', articleId }: { i
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent>
-              {['AI', 'Medicine', 'Physics', 'Biology', 'Technology'].map((c) => (
+              {[
+                'Structural',
+                'Geotechnical',
+                'Transportation',
+                'Water Resources',
+                'Environmental',
+                'Construction Management',
+                'Materials',
+                'Coastal',
+                'Surveying',
+              ].map((c) => (
                 <SelectItem key={c} value={c}>
                   {c}
                 </SelectItem>
