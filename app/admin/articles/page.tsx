@@ -2,6 +2,7 @@
 
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import AdminSidebar from '@/components/admin/AdminSidebar';
+import AdminHeader from '@/components/admin/AdminHeader';
 import ArticleTable from '@/components/admin/ArticleTable';
 import { getSupabase } from '@/lib/supabase';
 import { Input } from '@/components/ui/input';
@@ -34,22 +35,30 @@ export default function ManageArticlesPage() {
   }, [items, q]);
   return (
     <ProtectedRoute>
-      <div className="mx-auto flex max-w-6xl px-4">
+      <AdminHeader />
+      <div className="flex">
         <AdminSidebar />
-        <main className="flex-1 p-6">
-          <h2 className="mb-4 text-2xl font-semibold">Manage Articles</h2>
-          <div className="mb-4 max-w-sm">
-            <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Filter by title, author, category" />
-          </div>
-          {!items.length ? (
-            <div className="grid gap-2">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Skeleton key={i} className="h-12 w-full" />
-              ))}
+        <main className="ml-64 mt-16 flex-1 p-8">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="mb-6 text-3xl font-light tracking-tight">Manage Articles</h2>
+            <div className="mb-6 max-w-md">
+              <Input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Filter by title, author, category"
+                className="bg-card/50 backdrop-blur-sm"
+              />
             </div>
-          ) : (
-            <ArticleTable items={filtered} onRefresh={load} />
-          )}
+            {!items.length ? (
+              <div className="grid gap-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Skeleton key={i} className="h-12 w-full" />
+                ))}
+              </div>
+            ) : (
+              <ArticleTable items={filtered} onRefresh={load} />
+            )}
+          </div>
         </main>
       </div>
     </ProtectedRoute>

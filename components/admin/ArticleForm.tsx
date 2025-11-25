@@ -80,78 +80,80 @@ export default function ArticleForm({ initial, mode = 'create', articleId }: { i
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div>
-        <Label htmlFor="title">Title</Label>
-        <Input id="title" {...register('title')} />
-        {errors.title && <p className="text-sm text-destructive">{errors.title.message}</p>}
-      </div>
-      <div>
-        <Label htmlFor="description">Description / Abstract</Label>
-        <Textarea id="description" rows={3} {...register('description')} />
-        {errors.description && (
-          <p className="text-sm text-destructive">{errors.description.message}</p>
-        )}
-      </div>
-      <div>
-        <Label htmlFor="content">Full Content</Label>
-        <Textarea id="content" rows={10} {...register('content')} />
-        {errors.content && <p className="text-sm text-destructive">{errors.content.message}</p>}
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
+    <div className="rounded-xl border border-border/40 bg-card/50 p-8 backdrop-blur-sm">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div>
-          <Label htmlFor="author">Author</Label>
-          <Input id="author" {...register('author')} />
-          {errors.author && <p className="text-sm text-destructive">{errors.author.message}</p>}
+          <Label htmlFor="title" className="text-sm font-medium">Title</Label>
+          <Input id="title" {...register('title')} className="mt-2 bg-background/50" />
+          {errors.title && <p className="mt-1 text-sm text-destructive">{errors.title.message}</p>}
         </div>
         <div>
-          <Label htmlFor="date">Publication Date</Label>
-          <Input type="date" id="date" {...register('published_date')} />
-          {errors.published_date && (
-            <p className="text-sm text-destructive">{errors.published_date.message}</p>
+          <Label htmlFor="description" className="text-sm font-medium">Description / Abstract</Label>
+          <Textarea id="description" rows={3} {...register('description')} className="mt-2 bg-background/50" />
+          {errors.description && (
+            <p className="mt-1 text-sm text-destructive">{errors.description.message}</p>
           )}
         </div>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <Label>Category</Label>
-          <Select onValueChange={(v) => setValue('category', v)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              {[
-                'Structural',
-                'Geotechnical',
-                'Transportation',
-                'Water Resources',
-                'Environmental',
-                'Construction Management',
-                'Materials',
-                'Coastal',
-                'Surveying',
-              ].map((c) => (
-                <SelectItem key={c} value={c}>
-                  {c}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.category && <p className="text-sm text-destructive">{errors.category.message}</p>}
+          <Label htmlFor="content" className="text-sm font-medium">Full Content</Label>
+          <Textarea id="content" rows={10} {...register('content')} className="mt-2 bg-background/50" />
+          {errors.content && <p className="mt-1 text-sm text-destructive">{errors.content.message}</p>}
         </div>
-        <div>
-          <Label htmlFor="tags">Tags (comma separated)</Label>
-          <Input id="tags" placeholder="machine learning, healthcare" {...register('tags')} />
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <Label htmlFor="author" className="text-sm font-medium">Author</Label>
+            <Input id="author" {...register('author')} className="mt-2 bg-background/50" />
+            {errors.author && <p className="mt-1 text-sm text-destructive">{errors.author.message}</p>}
+          </div>
+          <div>
+            <Label htmlFor="date" className="text-sm font-medium">Publication Date</Label>
+            <Input type="date" id="date" {...register('published_date')} className="mt-2 bg-background/50" />
+            {errors.published_date && (
+              <p className="mt-1 text-sm text-destructive">{errors.published_date.message}</p>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="flex gap-2">
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Uploading…' : mode === 'create' ? 'Upload Article' : 'Save Changes'}
-        </Button>
-        <Button type="button" variant="secondary" onClick={() => history.back()}>
-          Cancel
-        </Button>
-      </div>
-    </form>
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <Label className="text-sm font-medium">Category</Label>
+            <Select onValueChange={(v) => setValue('category', v)}>
+              <SelectTrigger className="mt-2 bg-background/50">
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                {[
+                  'Structural',
+                  'Geotechnical',
+                  'Transportation',
+                  'Water Resources',
+                  'Environmental',
+                  'Construction Management',
+                  'Materials',
+                  'Coastal',
+                  'Surveying',
+                ].map((c) => (
+                  <SelectItem key={c} value={c}>
+                    {c}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {errors.category && <p className="mt-1 text-sm text-destructive">{errors.category.message}</p>}
+          </div>
+          <div>
+            <Label htmlFor="tags" className="text-sm font-medium">Tags (comma separated)</Label>
+            <Input id="tags" placeholder="machine learning, healthcare" {...register('tags')} className="mt-2 bg-background/50" />
+          </div>
+        </div>
+        <div className="flex gap-3 pt-4">
+          <Button type="submit" disabled={isSubmitting} className="px-6">
+            {isSubmitting ? 'Uploading…' : mode === 'create' ? 'Upload Article' : 'Save Changes'}
+          </Button>
+          <Button type="button" variant="secondary" onClick={() => history.back()} className="px-6">
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }

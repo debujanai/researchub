@@ -1,21 +1,62 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { LayoutDashboard, Upload, FileText } from 'lucide-react';
 
 export default function AdminSidebar() {
+  const pathname = usePathname();
+
+  const navItems = [
+    {
+      href: '/admin',
+      label: 'Dashboard',
+      icon: LayoutDashboard,
+      exact: true,
+    },
+    {
+      href: '/admin/upload',
+      label: 'Upload Article',
+      icon: Upload,
+    },
+    {
+      href: '/admin/articles',
+      label: 'Manage Articles',
+      icon: FileText,
+    },
+  ];
+
+  const isActive = (href: string, exact?: boolean) => {
+    if (exact) {
+      return pathname === href;
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
-    <aside className="w-56 shrink-0 border-r">
+    <aside className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-border/40 bg-card/30 backdrop-blur-sm">
       <nav className="space-y-1 p-4">
-        <Link href="/admin" className="block rounded px-3 py-2 hover:bg-accent">
-          Dashboard
-        </Link>
-        <Link href="/admin/upload" className="block rounded px-3 py-2 hover:bg-accent">
-          Upload Article
-        </Link>
-        <Link href="/admin/articles" className="block rounded px-3 py-2 hover:bg-accent">
-          Manage Articles
-        </Link>
-        <Link href="/admin/login" className="block rounded px-3 py-2 hover:bg-accent">
-          Logout
-        </Link>
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const active = isActive(item.href, item.exact);
+
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`group flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${active
+                  ? 'bg-primary/10 text-primary shadow-sm'
+                  : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
+                }`}
+            >
+              <Icon
+                className={`h-5 w-5 transition-transform group-hover:scale-110 ${active ? 'text-primary' : 'text-muted-foreground'
+                  }`}
+              />
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
     </aside>
   );
