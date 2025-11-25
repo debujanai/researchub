@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getSupabase } from '@/lib/supabase';
 import type { Article } from '@/lib/types';
 import ArticleCard from '@/components/ArticleCard';
-import SearchBar from '@/components/SearchBar';
+import { AnimatedSearchBar } from '@/components/ui/animated-search-bar';
 
 type Props = { params: { q: string } };
 
@@ -32,8 +32,8 @@ export default async function SearchByParamPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
-      <div className="mb-6">
-        <SearchBar />
+      <div className="mb-8">
+        <AnimatedSearchBar />
       </div>
       {q && (
         <div className="mb-4">

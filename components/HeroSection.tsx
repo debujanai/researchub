@@ -1,16 +1,12 @@
-import TypewriterText from '@/components/TypewriterText';
-import SearchBar from '@/components/SearchBar';
+import { AnimatedSearchBar } from '@/components/ui/animated-search-bar';
 import { Check } from 'lucide-react';
-import { displayFont } from '@/lib/fonts';
 
 export default function HeroSection() {
   return (
-    <section className="flex min-h-[78vh] flex-col items-center justify-center px-6 text-center">
-      <h1 className={`${displayFont.className} text-7xl font-extrabold tracking-tight sm:text-8xl`}>SCHOLAR</h1>
-      <TypewriterText />
-      <div className="mt-2 h-0.5 w-28 rounded bg-accent" />
-      <div className="mt-10 w-full max-w-4xl">
-        <SearchBar large />
+    <section className="pointer-events-none flex min-h-[78vh] flex-col items-center justify-center px-6 text-center">
+      <h1 className="text-7xl font-light tracking-tight sm:text-8xl">SCHOLAR</h1>
+      <div className="pointer-events-auto mt-10 w-full max-w-4xl">
+        <AnimatedSearchBar className="mx-auto" />
       </div>
       <p className="mt-6 max-w-2xl text-sm text-muted-foreground">
         Your comprehensive hub for peer‑reviewed civil engineering articles and papers—
