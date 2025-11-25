@@ -49,7 +49,7 @@ export default function SearchPage() {
   }, [q]);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-8">
       <div className="mb-6">
         <SearchBar />
       </div>
@@ -60,7 +60,7 @@ export default function SearchPage() {
         </div>
       )}
       {loading && (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {Array.from({ length: 6 }).map((_, i) => (
             <Skeleton key={i} className="h-40 w-full" />
           ))}
@@ -70,7 +70,7 @@ export default function SearchPage() {
         <p className="text-center text-muted-foreground">No results found</p>
       )}
       {!loading && results && results.length > 0 && (
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {results.map((a) => (
             <ArticleCard key={a.id} article={a} />
           ))}
